@@ -1,0 +1,79 @@
+{
+  "name": "here-it-book",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "storybook": "storybook dev",
+    "storybook:build": "storybook build",
+    "storybook:ci": "storybook dev --ci --no-open",
+    "test": "vitest",
+    "test:unit": "vitest",
+    "test:unit:run": "vitest run",
+    "test:storybook": "vitest --config vitest.storybook.config.mts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "msw:init": "msw init public --save",
+    "prepare": "cd ../.. && husky frontend/here-it-book/.husky"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.99.2",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.2.13",
+    "@storybook/addon-vitest": "^10.2.13",
+    "@storybook/nextjs-vite": "^10.3.5",
+    "@tailwindcss/postcss": "^4.2.3",
+    "@tanstack/react-query-devtools": "^5.99.2",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^20.19.39",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/browser-playwright": "^4.1.4",
+    "@vitest/coverage-v8": "^4.1.4",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "16.2.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-storybook": "^10.3.5",
+    "husky": "^9.1.7",
+    "jsdom": "^29.0.2",
+    "lint-staged": "^16.2.7",
+    "msw": "^2.13.4",
+    "msw-storybook-addon": "^2.0.7",
+    "prettier": "^3.8.1",
+    "storybook": "^10.3.5",
+    "tailwindcss": "^4.2.3",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.9",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,scss,html,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

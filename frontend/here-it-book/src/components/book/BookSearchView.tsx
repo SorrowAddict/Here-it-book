@@ -1,7 +1,8 @@
 'use client'
 
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useMemo, useSyncExternalStore } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { FormEvent, useMemo, useSyncExternalStore } from 'react'
 import { BookResultCard } from '@/components/book/BookResultCard'
 import { useBookSearch } from '@/features/book-search/use-book-search'
 import { toTotalPages } from '@/features/book-search/utils'
@@ -12,13 +13,17 @@ type BookSearchViewProps = {
   initialQuery?: string
   autoSearch?: boolean
   embedded?: boolean
+  syncQueryInUrl?: boolean
 }
 
 export function BookSearchView({
   initialQuery = '',
   autoSearch = false,
   embedded = false,
+  syncQueryInUrl = false,
 }: BookSearchViewProps) {
+  const router = useRouter()
+  const pathname = usePathname()
   const isMobile = useIsMobile()
   const {
     inputValue,
@@ -32,6 +37,18 @@ export function BookSearchView({
     submitSearch,
     retry,
   } = useBookSearch({ initialQuery, autoSearch, accumulatePages: isMobile })
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    submitSearch(event)
+
+    if (!syncQueryInUrl) {
+      return
+    }
+
+    const trimmed = inputValue.trim()
+    const target = trimmed ? `${pathname}?query=${encodeURIComponent(trimmed)}` : pathname
+    router.replace(target, { scroll: false })
+  }
 
   const totalPages = useMemo(() => {
     if (!response) {
@@ -66,7 +83,7 @@ export function BookSearchView({
       <SearchInput
         value={inputValue}
         onChange={setInputValue}
-        onSubmit={submitSearch}
+        onSubmit={handleSubmit}
         placeholder="예: 해리 포터"
         inputAriaLabel="도서 검색어"
         formClassName="mx-auto mt-6 max-w-2xl"

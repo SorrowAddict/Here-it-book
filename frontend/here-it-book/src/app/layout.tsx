@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { QueryProvider } from '@/lib/QueryProvider'
+import { BookOpen, House, Search } from 'lucide-react'
+import Link from 'next/link'
+import { MswWorker } from '@/mocks/MswWorker'
 import './globals.css'
 
 const geistSans = Geist({
@@ -25,8 +27,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <QueryProvider>{children}</QueryProvider>
+      <body className="min-h-full flex flex-col bg-white text-slate-900">
+        <MswWorker />
+        <header className="border-b border-emerald-100 bg-white/95 backdrop-blur">
+          <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-6">
+            <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-emerald-700">
+              <BookOpen className="h-4 w-4" />
+              여깃북
+            </Link>
+            <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
+              <Link href="/" className="inline-flex items-center gap-1.5 transition hover:text-emerald-700">
+                <House className="h-3.5 w-3.5" />
+                홈
+              </Link>
+              <Link href="/search" className="inline-flex items-center gap-1.5 transition hover:text-emerald-700">
+                <Search className="h-3.5 w-3.5" />
+                검색
+              </Link>
+            </nav>
+          </div>
+        </header>
+        <div className="flex-1">{children}</div>
       </body>
     </html>
   )

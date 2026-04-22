@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { BookOpen, House, Search } from 'lucide-react'
 import Link from 'next/link'
+import { QueryProvider } from '@/lib/QueryProvider'
 import { MswWorker } from '@/mocks/MswWorker'
 import './globals.css'
 
@@ -47,7 +48,9 @@ export default function RootLayout({
             </nav>
           </div>
         </header>
-        <div className="flex-1">{children}</div>
+        <QueryProvider>
+          <div className="flex-1">{children}</div>
+        </QueryProvider>
       </body>
     </html>
   )

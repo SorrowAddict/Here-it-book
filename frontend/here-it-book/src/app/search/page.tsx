@@ -1,15 +1,15 @@
-'use client'
-
-import { useSearchParams } from 'next/navigation'
 import { BookSearchView } from '@/components/book/BookSearchView'
 
-export default function SearchPage() {
-  const searchParams = useSearchParams()
-  const initialQuery = searchParams.get('query') ?? ''
+type SearchPageProps = {
+  searchParams: Promise<{ query?: string }>
+}
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const { query = '' } = await searchParams
 
   return (
     <main className="mx-auto w-full max-w-5xl py-10">
-      <BookSearchView initialQuery={initialQuery} autoSearch={Boolean(initialQuery.trim())} />
+      <BookSearchView initialQuery={query} autoSearch={Boolean(query.trim())} />
     </main>
   )
 }

@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import type {
+  BookSearchItem,
   BookSearchResponse,
   BookSearchSort,
 } from '@/features/book-search/types'

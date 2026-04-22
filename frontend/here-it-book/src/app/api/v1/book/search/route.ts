@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import type { BookSearchResponse, BookSearchSort } from '@/features/book-search/types'
+import type { BookSearchItem, BookSearchResponse, BookSearchSort } from '@/features/book-search/types'
 import { MOCK_BOOKS } from '@/mocks/mockBooks'
 
 const parsePositiveInt = (value: string | null, fallback: number): number => {

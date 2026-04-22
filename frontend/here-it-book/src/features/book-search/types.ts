@@ -11,6 +11,10 @@ export type BookSearchItem = {
   total_cnt: number
   borrowed_cnt: number
   available: number
+  section?: string
+  floor?: string
+  direction?: string
+  mapImageUrl?: string
 }
 
 export type BookSearchResponse = {

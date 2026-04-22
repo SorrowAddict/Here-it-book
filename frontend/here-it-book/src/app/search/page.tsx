@@ -9,7 +9,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-5xl py-10">
-      <BookSearchView initialQuery={query} autoSearch={Boolean(query.trim())} />
+      <BookSearchView initialQuery={query} autoSearch={Boolean(query.trim())} syncQueryInUrl />
     </main>
   )
 }

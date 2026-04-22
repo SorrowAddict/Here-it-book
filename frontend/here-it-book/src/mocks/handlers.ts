@@ -4,6 +4,7 @@ import type {
   BookSearchResponse,
   BookSearchSort,
 } from '@/features/book-search/types'
+import { getBookDetailByIsbn } from '@/features/book-detail/service'
 import { MOCK_BOOKS } from '@/mocks/mockBooks'
 
 const parsePositiveInt = (value: string | null, fallback: number): number => {
@@ -64,5 +65,17 @@ export const handlers = [
     }
 
     return HttpResponse.json(response)
+  }),
+
+  http.get('/api/v1/book/search_adv', ({ request }) => {
+    const url = new URL(request.url)
+    const dIsbn = (url.searchParams.get('d_isbn') ?? '').trim()
+    const book = getBookDetailByIsbn(dIsbn)
+
+    if (!book) {
+      return HttpResponse.json({ message: '도서를 찾을 수 없습니다.' }, { status: 404 })
+    }
+
+    return HttpResponse.json(book)
   }),
 ]

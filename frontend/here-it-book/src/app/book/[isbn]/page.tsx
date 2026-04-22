@@ -18,12 +18,7 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
   }
 
   const hasImage = Boolean(book.image?.trim())
-  const fallbackLocation = getLocationInfo(book.isbn)
-  const location = {
-    section: book.section?.trim() || fallbackLocation.section,
-    floor: book.floor?.trim() || fallbackLocation.floor,
-    direction: book.direction?.trim() || fallbackLocation.direction,
-  }
+  const directionLabel = toDirectionLabel(book.direction)
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-10">
@@ -103,11 +98,11 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
               서고 위치
             </p>
             <p className="mt-2 text-sm text-slate-700">
-              <span className="font-semibold text-slate-900">{location.section}</span>
+              <span className="font-semibold text-slate-900">{book.section}</span>
               <span className="mx-2 text-emerald-300">|</span>
-              <span className="font-semibold text-slate-900">{location.floor}</span>
+              <span className="font-semibold text-slate-900">{book.floor}층</span>
               <span className="mx-2 text-emerald-300">|</span>
-              <span className="font-semibold text-slate-900">{location.direction}측 서가</span>
+              <span className="font-semibold text-slate-900">{directionLabel}측 서가</span>
             </p>
           </div>
 
@@ -123,8 +118,8 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
         <div className="mt-4">
 
           <BookMapImage
-            src={book.mapImageUrl}
-            alt={`${location.floor} ${location.section} 약도`}
+            src={book.map_url}
+            alt={`${book.floor}층 ${book.section} 약도`}
             className="mt-4 w-full rounded-lg border border-emerald-100 bg-emerald-50/30 object-cover"
           />
         </div>
@@ -133,19 +128,14 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
   )
 }
 
-function getLocationInfo(isbn: string): { section: string; floor: string; direction: '좌' | '중앙' | '우' } {
-  const sections = ['A', 'B', 'C', 'D']
-  const floors = ['1층', '2층', '3층']
-  const directions: Array<'좌' | '중앙' | '우'> = ['좌', '중앙', '우']
-  const sum = isbn
-    .split('')
-    .map((char) => Number(char))
-    .filter((value) => Number.isFinite(value))
-    .reduce((acc, cur) => acc + cur, 0)
-
-  return {
-    section: `${sections[sum % sections.length]} 구역`,
-    floor: floors[sum % floors.length],
-    direction: directions[sum % directions.length],
+function toDirectionLabel(direction: 'left' | 'center' | 'right') {
+  if (direction === 'left') {
+    return '좌'
   }
+
+  if (direction === 'center') {
+    return '중앙'
+  }
+
+  return '우'
 }
